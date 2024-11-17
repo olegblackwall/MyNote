@@ -1,0 +1,61 @@
+@use '@/assets/fonts.sass' as fonts
+
+
+// Палитра цветов
+$dark: #0A1F38
+$dark-middle: #1B2F46
+$dark-light: #2F4056
+
+$gray: #9DA5AF
+$white: #FFFFFF
+$error: #FF7461
+
+$green: #A5BB0C
+$green-dark: #819400
+$green-middle: #97AB0D
+$green-light: #B1C909
+
+// Диапазоны ширины экранов
+$breakpoint-lg-max: 1919px
+$breakpoint-lg-min: 1366px
+
+$breakpoint-md-max: 1365px
+$breakpoint-md-min: 768px
+
+$breakpoint-sm-max: 767px
+
+@function rem($value)
+    $rem_value: calc($value / 16) + rem
+    @return $rem_value
+
+* 
+    margin: 0
+    box-sizing: border-box
+
+html, body 
+    font-family: 'Montserrat', sans-serif
+    background-color: $dark
+    width: 100%
+    min-width: rem(360)
+    min-height: 100%
+
+#app 
+    max-width: rem(1920)
+    margin: 0 auto
+    font-weight: normal
+
+input, textarea, button
+    border: none
+    outline: none
+    -webkit-appearance: none
+    font-family: 'Montserrat', sans-serif
+
+input
+    font-weight: 400
+    font-size: rem(18)
+    line-height: rem(28)
+
+button
+    font-weight: 500
+    font-size: rem(20)
+    line-height: rem(32)
