@@ -4,7 +4,7 @@
             :is_loading="is_loading"
         />
 		<div class="note-app__container">
-            <router-view></router-view>
+            <router-view v-if="!is_loading"></router-view>
 		</div>
         <modalCmp v-if="storeModal.currentComponent"/>
 	</main>
@@ -32,6 +32,7 @@ const checkAuthStatus = async () => {
 
         if (!token) {
             storeAuth.logOut()
+            is_loading.value = false
             return
         }
 
