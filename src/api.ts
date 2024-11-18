@@ -59,7 +59,9 @@ baseURL.interceptors.response.use(
 const formatErrorResponse = (response: any) => {
     const message = Array.isArray(response.data.message) && response.data.message.length === 1
         ? response.data.message[0]
-        : response.data.message
+        : Array.isArray(response.data.message)
+            ? response.data.message.join('. ')
+            : response.data.message
 
     return {
         message: Array.isArray(message) ? JSON.stringify(message) : message,

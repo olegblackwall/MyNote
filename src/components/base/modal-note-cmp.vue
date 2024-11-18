@@ -17,11 +17,14 @@
             :textarea_error="textarea.textarea_error"
             @set_textarea="setTextarea"
         />
-        <btnCmp 
-            class="modal-note__btn"
-            :text="'Добавить'"
-            type="submit"
-        />
+        <div class="modal-note__info">
+            <btnCmp 
+                class="modal-note__info__btn"
+                :text="'Добавить'"
+                type="submit"
+            />
+            <span v-if="error_message.length" class="modal-note__info__error">{{ error_message }}</span>
+        </div>
     </form>
 </template>
 
@@ -34,11 +37,9 @@ import { useStoreModal } from '@/stores/modal'
 import { useNotesStore } from '@/stores/notes'
 import { createNote } from '@/api'
 
-// Управление модальным окном
 const storeModal = useStoreModal()
 const storeNotes = useNotesStore()
 
-// Поля ввода для заголовка
 const input = ref({
     id: 'title',
     type: 'text',
@@ -51,7 +52,6 @@ const input = ref({
     maxlength: 100,
 })
 
-// Поля ввода для текста заметки
 const textarea = ref({
     id: 'text',
     type: 'text',
@@ -63,28 +63,27 @@ const textarea = ref({
     textarea_error: '',
 })
 
-// Функция обновления значения заголовка
+const error_message = ref<string>('')
+
 const setInput = (payload: { value: string, id: string }) => {
-    input.value.value = payload.value.trim()
+    input.value.value = payload.value
 }
 
-// Функция обновления значения текста
 const setTextarea = (value: string) => {
-    textarea.value.value = value.trim()
+    textarea.value.value = value
 }
 
-// Обработка отправки формы
 const handleSubmit = async () => {
     let isValid = true
 
-    if (!input.value.value.trim()) {
+    if (!input.value.value) {
         input.value.error = 'Введите название заметки'
         isValid = false
     } else {
         input.value.error = '' 
     }
 
-    if (!textarea.value.value.trim()) {
+    if (!textarea.value.value) {
         textarea.value.textarea_error = 'Введите текст заметки'
         isValid = false
     } else {
@@ -95,12 +94,15 @@ const handleSubmit = async () => {
 
     try {
         const new_note = await createNote(input.value.value, textarea.value.value)
+        console.log(new_note, 'input.value.value, textarea.value.value');
         storeNotes.addNote(new_note)
         storeModal.closeModal()
         input.value.value = ''
         textarea.value.value = ''
     } catch (error) {
-        console.error('Ошибка при создании заметки:', error)
+        if (error instanceof Error) {
+            error_message.value = error.message
+        }
     }
 }
 </script>
@@ -117,10 +119,33 @@ const handleSubmit = async () => {
     @media (max-width: $breakpoint-sm-max)
         gap: rem(16)
 
-    &__btn
-        margin: rem(16) 0 0 auto
+    &__info
+        margin-top: rem(16)
+        display: flex
+        flex-direction: column
+        gap: rem(20)
 
         @media (max-width: $breakpoint-sm-max)
             margin-top: rem(12)
+            gap: rem(12)
+
+        &__btn
+            margin-left: auto
+            @media (max-width: $breakpoint-sm-max)
+                margin-left: 0
+                width: 100%
+
+        &__error
+            font-size: rem(18)
+            font-weight: 400
+            line-height: rem(28)
+            color: $error
+            border-radius: rem(24)
+            background-color: #FF74611A
+            padding: rem(8) 0 rem(8) rem(20)
             width: 100%
+
+            @media (max-width: $breakpoint-sm-max)
+                font-size: rem(14)
+                padding: rem(6) rem(20)
 </style>

@@ -24,7 +24,7 @@
                 :text="'Войти'"
                 type="submit"
             />
-            <span v-if="errorMessage.length" class="modal-auth__info__error">{{ errorMessage }}</span>
+            <span v-if="error_message.length" class="modal-auth__info__error">{{ error_message }}</span>
         </div>
     </form>
 </template>
@@ -68,7 +68,7 @@ const auth_form = ref([
     },
 ]as Array<IForm>)
 
-const errorMessage = ref<string>('')
+const error_message = ref<string>('')
 
 const setUserData = (value: { id: string, value: string }) => {
     for (let i = 0; i < auth_form.value.length; i++) {
@@ -136,7 +136,7 @@ const authorizationUser = async () => {
         router.push('/noteboard')
     } catch (error) {
         if (error instanceof Error) {
-            errorMessage.value = error.message
+            error_message.value = error.message
         }
     }
 }

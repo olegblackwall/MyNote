@@ -24,7 +24,7 @@
                 :text="'Зарегистрироваться'"
                 type="submit"
             />
-            <span v-if="errorMessage.length" class="modal-registration__info__error">{{ errorMessage }}</span>
+            <span v-if="error_message.length" class="modal-registration__info__error">{{ error_message }}</span>
         </div>
     </form>
 </template>
@@ -111,7 +111,7 @@ const validCheck = (input: IForm): boolean => {
     return true
 }
 
-const errorMessage = ref<string>('')
+const error_message = ref<string>('')
 
 const registrationUser = async () => {
     let user_valid = true as boolean
@@ -142,7 +142,7 @@ const registrationUser = async () => {
         storeModal.closeModal()
     } catch (error) {
         if (error instanceof Error) {
-            errorMessage.value = error.message
+            error_message.value = error.message
         }
     }
 }

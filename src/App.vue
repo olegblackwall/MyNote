@@ -71,10 +71,10 @@ onMounted(() => {
     font-weight: normal
     padding: rem(0) rem(160)
 
-    @media (max-width: $breakpoint-lg-max) and (min-width: $breakpoint-lg-min)
+    @media (max-width: $breakpoint-lg-max)
         padding: rem(0) rem(80)
 
-    @media (max-width: $breakpoint-md-max) and (min-width: $breakpoint-md-min)
+    @media (max-width: $breakpoint-md-max)
         padding: rem(0) rem(40)
 
     @media (max-width: $breakpoint-sm-max)

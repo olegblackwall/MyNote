@@ -86,6 +86,8 @@ import { defineProps, defineEmits, reactive, watch, computed } from 'vue'
         transition: all .2s
         border: rem(2) solid $white
         resize: none
+        overflow: auto
+        clip-path: inset(0 round rem(36))
 
         &._fill-textarea
             color: $dark

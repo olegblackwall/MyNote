@@ -100,7 +100,7 @@ onBeforeUnmount(() => {
     justify-content: space-between
     padding: rem(43) rem(0)
 
-    @media (max-width: $breakpoint-lg-max) and (min-width: $breakpoint-md-min)
+    @media (max-width: $breakpoint-lg-max)
         padding: rem(23) rem(0)
 
     @media (max-width: $breakpoint-sm-max)
